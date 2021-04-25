@@ -1,19 +1,37 @@
 package proj.server;
 
 import java.util.Random;
+import java.util.TimerTask;
 
-public class HeatSensorDriver implements IHeatSensor,IObserver {
+
+public class HeatSensorDriver extends TimerTask implements IHeatSensor {
 
     Random rand= new Random();
-    ISubject publisher;
+    ISubject publisher = new Publisher() ;
+    int heat;
+
+    HeatSensorDriver(){
+    }
+    @Override
+    public void addSubscriber(SubscriberUser subscriberUser){
+        publisher.attach(subscriberUser);
+        System.out.println("Heat Sub added");
+    }
+
+    @Override
+    public void run() {
+        int newHeat = rand.nextInt(1000);
+        publisher.notify("New heat : "+newHeat);
+        this.heat= newHeat;
+    }
+
     @Override
     public int getHeat() {
-        publisher.notify("Çalıştı");
-        return rand.nextInt(1000);
+
+        return this.heat;
 
     }
-    @Override
-    public void update(String mesaj) {
-        System.out.println("Abone1 e gelen mesaj->" + mesaj);
-    }
+
+
+
 }

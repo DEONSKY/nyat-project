@@ -22,4 +22,8 @@ public class Publisher implements ISubject {
             subscriber.update(mesaj);
         }
     }
+    @Override
+    public void getL(){
+        System.out.println(subscribers.size());
+    }
 }

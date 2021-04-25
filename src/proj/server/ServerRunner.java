@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ServerRunner implements Runnable {
 
@@ -38,6 +40,12 @@ public class ServerRunner implements Runnable {
     }
 
     public void run() {
+        SubscriberUser subscriber= new SubscriberUser();
+        heatSensor.addSubscriber(subscriber);
+        cooler.addSubscriber(subscriber);
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate((TimerTask) heatSensor, 0, 5000);
+
         try {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

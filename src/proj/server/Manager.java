@@ -1,6 +1,6 @@
 package proj.server;
 
-public class Manager {
+public class Manager  {
     ManagerStatus managerStatus;
     private final IUserRepository userRepository;
     private final IHeatSensor heatSensor;
@@ -33,6 +33,7 @@ public class Manager {
     public boolean getCoolerStatus(){
         return cooler.getCoolerStatus();
     }
+
 
 
 
