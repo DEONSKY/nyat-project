@@ -12,7 +12,7 @@ public class UserRepositoryPostgreSql implements IUserRepository {
         Connection conn=null;
 
         try {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pdp2",
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/nyat2",
                     "postgres", "running-away-222");
             if (conn != null)
                 System.out.println("Veritabanına bağlandı!");

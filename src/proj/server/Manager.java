@@ -63,20 +63,18 @@ public class Manager implements IManager {
     }
     @Override
     public void run() throws IOException {
+        int clientCount = 1;
         ServerSocket serverSocket = new ServerSocket(8001);
         System.out.println("Sunucu oluşturuldu. İstek gelmesi bekleniyor...");
         while (true) {
             Socket clientSocket = serverSocket.accept();
             System.out.println(clientSocket.getRemoteSocketAddress() + " baglandi.");
-            NetworkThread nt1 = new NetworkThread("Connection 1 handler", clientSocket,this);
+            NetworkThread nt1 = new NetworkThread("Connection " +clientCount+" handler", clientSocket,this);
             heatSensor.addObservable(nt1);
             cooler.addObservable(nt1);
             this.addObservable(nt1);
             nt1.start();
-            NetworkThread nt2 = new NetworkThread("Connection 2 handler", clientSocket,this);
-            heatSensor.addObservable(nt2);
-            cooler.addObservable(nt2);
-            this.addObservable(nt2);
+            clientCount++;
         }
     }
 }
