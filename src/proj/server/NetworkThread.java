@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.Observable;
 
 public class NetworkThread implements Runnable,IObserver{
 
@@ -13,15 +15,20 @@ public class NetworkThread implements Runnable,IObserver{
 
     private final Socket clientSocket;
     private final IManager manager;
+    private final List<IObservable> observables;
 
-    NetworkThread(String threadName, Socket clientSocket, IManager manager) {
+    NetworkThread(List<IObservable> observables,String threadName, Socket clientSocket, IManager manager) {
         this.threadName = threadName;
         this.clientSocket = clientSocket;
         this.manager = manager;
+        this.observables = observables;
     }
 
     public void run() {
         try {
+            for(IObservable observable:observables)
+                observable.addObserver(this);
+
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -87,6 +94,11 @@ public class NetworkThread implements Runnable,IObserver{
             } while (!inputLine.equals("end"));
             System.out.println(clientSocket.getLocalSocketAddress() + " baglantisi kesildi.");
             // stream ve socketleri kapat.
+            for(IObservable observable:observables)
+                observable.detachObserver(this);
+
+            networkThread.interrupt();
+
 
         } catch (IOException e) {
             System.out.println(e);
@@ -94,7 +106,7 @@ public class NetworkThread implements Runnable,IObserver{
     }
     public void start(){
         if(networkThread==null){
-            networkThread = new Thread(new NetworkThread(threadName, clientSocket,manager));
+            networkThread = new Thread(new NetworkThread(observables,threadName, clientSocket,manager));
             networkThread.start();
         }
     }

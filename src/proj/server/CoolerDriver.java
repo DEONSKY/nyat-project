@@ -24,8 +24,14 @@ public class CoolerDriver implements ICooler{
     }
 
     @Override
-    public void addObservable(IObserver observer) {
+    public void addObserver(IObserver observer) {
         publisher.attach(observer);
         System.out.println("Cooler Sub added");
+    }
+
+    @Override
+    public void detachObserver(IObserver observer) {
+        publisher.detach(observer);
+        System.out.println("Cooler Sub detach");
     }
 }

@@ -1,6 +1,7 @@
 package proj.server;
 
 public interface IObservable {
-    void addObservable(IObserver observer);
+    void addObserver(IObserver observer);
+    void detachObserver(IObserver observer);
 }
 

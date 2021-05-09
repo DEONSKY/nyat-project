@@ -12,9 +12,15 @@ public class HeatSensorDriver extends TimerTask implements IHeatSensor {
 
     HeatSensorDriver(){
     }
-    public void addObservable(IObserver observer){
+    public void addObserver(IObserver observer){
         publisher.attach(observer);
         System.out.println("Heat Sub added");
+    }
+
+    @Override
+    public void detachObserver(IObserver observer) {
+        publisher.detach(observer);
+        System.out.println("Heat Sub detach");
     }
 
     @Override

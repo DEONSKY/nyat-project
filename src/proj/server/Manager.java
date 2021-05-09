@@ -3,6 +3,8 @@ package proj.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,10 +59,17 @@ public class Manager implements IManager {
 
 
     @Override
-    public void addObservable(IObserver observer) {
+    public void addObserver(IObserver observer) {
         publisher.attach(observer);
         System.out.println("Manager Sub added");
     }
+
+    @Override
+    public void detachObserver(IObserver observer) {
+        publisher.detach(observer);
+        System.out.println("Manager Sub detach");
+    }
+
     @Override
     public void run() throws IOException {
         int clientCount = 1;
@@ -69,10 +78,14 @@ public class Manager implements IManager {
         while (true) {
             Socket clientSocket = serverSocket.accept();
             System.out.println(clientSocket.getRemoteSocketAddress() + " baglandi.");
-            NetworkThread nt1 = new NetworkThread("Connection " +clientCount+" handler", clientSocket,this);
-            heatSensor.addObservable(nt1);
-            cooler.addObservable(nt1);
-            this.addObservable(nt1);
+            List<IObservable> observables = new ArrayList<>();
+            observables.add(heatSensor);
+            observables.add(cooler);
+            observables.add(this);
+            NetworkThread nt1 = new NetworkThread(observables,"Connection " +clientCount+" handler", clientSocket,this);
+            /*heatSensor.addObserver(nt1);
+            cooler.addObserver(nt1);
+            this.addObserver(nt1);*/
             nt1.start();
             clientCount++;
         }
