@@ -19,17 +19,13 @@ public class CoolerDriver implements ICooler{
     }
 
     @Override
-    public void setCoolerMode(String mode) {
-
-    }
-    @Override
     public boolean getCoolerStatus(){
         return status;
     }
 
     @Override
-    public void addSubscriber(SubscriberUser subscriberUser) {
-        publisher.attach(subscriberUser);
+    public void addObservable(IObserver observer) {
+        publisher.attach(observer);
         System.out.println("Cooler Sub added");
     }
 }

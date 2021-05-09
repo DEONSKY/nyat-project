@@ -12,9 +12,8 @@ public class HeatSensorDriver extends TimerTask implements IHeatSensor {
 
     HeatSensorDriver(){
     }
-    @Override
-    public void addSubscriber(SubscriberUser subscriberUser){
-        publisher.attach(subscriberUser);
+    public void addObservable(IObserver observer){
+        publisher.attach(observer);
         System.out.println("Heat Sub added");
     }
 
@@ -31,7 +30,5 @@ public class HeatSensorDriver extends TimerTask implements IHeatSensor {
         return this.heat;
 
     }
-
-
 
 }

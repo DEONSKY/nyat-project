@@ -32,22 +32,32 @@ public class ClientRunner {
         // klavyeden girdi: stdIn
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String userInput;
-        System.out.println("Lütfen Komutları Çalıştımak için önce(Login:username:password) Login olun. (baglantiyi kesmek icin: son) ...");
+        System.out.println("Lütfen Komutları Çalıştımak için önce(Login:username:password) Login olun.(default->Login:asd:123) (baglantiyi kesmek icin: end) ...");
 
         boolean isLogged=false;
 
 
 
-        while (!(userInput = stdIn.readLine()).equals("son")) {
-
-            if(isLogged){
+        while (!(userInput = stdIn.readLine()).equals("end")) {
+            if(userInput.equals("help")){
+                System.out.println(
+                        "Sunucuya Login olmak için Login:username:password formatında bilgilerinizi girin\n" +
+                        "Login olduktan sonra kullanılabilecek komutlar\n"+
+                        "getHeat = Observer yardımı ile güncellenen son değeri getirir\n"+
+                        "setCoolerOn = Soğutucuyu açar\n"+
+                        "setCoolerOff = Soğutucuyu Kapatır\n"+
+                        "getCoolerStatus = Soğutucunun açık yada kapalı olduğu bilgisini getirir\n" +
+                                "end = Bağlantıyı sonlandırır"
+                );
+            }
+            else if(isLogged){
                 out.println(userInput);
                 System.out.println("Sunucudan gelen: " + in.readLine());
             }else{
 
                 out.println(userInput);
 
-                if(in.readLine().equals("TRUE")){
+                if(in.readLine().equals("true")){
                     isLogged=true;
                     System.out.println("Sunucudan gelen: Yetkilendirme Başarılı");
                 }else{
