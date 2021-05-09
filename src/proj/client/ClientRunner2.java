@@ -32,8 +32,9 @@ public class ClientRunner2 {
         // klavyeden girdi: stdIn
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String userInput;
-        System.out.println("Lütfen Komutları Çalıştımak için önce(Login:username:password) Login olun.(default->Login:asd:123) (baglantiyi kesmek icin: end) ...");
-
+        System.out.println("Lütfen Komutları Çalıştımak için önce(Login:username:password) Login olun.(default->Login:asd:123)");
+        System.out.println("Kayıtlı hesabınız yoksa Register:username:password formatında kaydetebilirsiniz");
+        System.out.println("(baglantiyi kesmek icin: end) ...");
         boolean isLogged=false;
 
 

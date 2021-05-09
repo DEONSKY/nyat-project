@@ -34,7 +34,14 @@ public class Manager implements IManager {
             return true;
         }
         return false;
-
+    }
+    public void Register(String username,String password){
+        setManagerStatus(ManagerStatus.PROCESSING);
+        User user = userRepository.findByUsername(username);
+        if(user==null){
+            System.out.println("HHEHEHEHE");
+            userRepository.add(new User.Builder().username(username).password(password).build());
+        }
     }
 
     public int getHeat(){

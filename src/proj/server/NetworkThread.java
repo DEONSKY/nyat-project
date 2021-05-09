@@ -75,6 +75,12 @@ public class NetworkThread implements Runnable,IObserver{
                             isLogged=manager.Login(username,password);
                             System.out.println(isLogged);
                         }
+                        if(tokens[0].equals("Register")&&tokens.length==3){
+                            username = tokens[1];
+                            password = tokens[2];
+                            manager.Register(username,password);
+                            System.out.println(isLogged);
+                        }
 
                         //inputLine=username+""+password;
                         if(isLogged){
@@ -97,10 +103,23 @@ public class NetworkThread implements Runnable,IObserver{
             for(IObservable observable:observables)
                 observable.detachObserver(this);
 
-            networkThread.interrupt();
+            try{
+                networkThread.interrupt();
+            }catch (NullPointerException e){
+                System.out.println("Thread Killed");
+            }
+
 
 
         } catch (IOException e) {
+            for(IObservable observable:observables)
+                observable.detachObserver(this);
+
+            try{
+                networkThread.interrupt();
+            }catch (NullPointerException er){
+                System.out.println("Thread Killed");
+            }
             System.out.println(e);
         }
     }

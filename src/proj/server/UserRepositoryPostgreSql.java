@@ -26,7 +26,7 @@ public class UserRepositoryPostgreSql implements IUserRepository {
 
     @Override
     public User findByUsername(String username){
-        System.out.println("ürün aranıyor...");
+        System.out.println("user aranıyor...");
         User user=null;
 
         String sql= "SELECT *  FROM public.user WHERE username="+"'"+ username+"'";
@@ -68,10 +68,10 @@ public class UserRepositoryPostgreSql implements IUserRepository {
 
     @Override
     public void add(User user) {
-        System.out.println("ürünü kaydediyor..."+user);
+        System.out.println("ürünü kaydediyor..."+user.getUsername());
         //String sql= "INSERT INTO  \"Urun\" (\"urunNo\",\"adi\",\"birimFiyati\",\"stokMiktari\") VALUES("+urun.getUrunNo()+",\'"+urun.getAdi()+"\',"+urun.getBirimFiyati()+","+urun.getStokMiktari()+")";
 
-        String sql= "INSERT INTO  \"user\" (\"username\",\"password\") VALUES(\'"+user.getUsername()+"\',"+user.getPassword()+")";
+        String sql= "INSERT INTO  public.user (username,password) VALUES("+"'"+user.getUsername()+"'"+","+"'"+user.getPassword()+"'"+")";
 
         Connection conn=this.connect();
 
